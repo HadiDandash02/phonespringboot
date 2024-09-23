@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Admin Home</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="#">Admin Dashboard</a>
+  <div class="collapse navbar-collapse">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item"><a class="nav-link" th:href="@{/admin/dashboard}">Dashboard</a></li>
+      <li class="nav-item"><a class="nav-link" th:href="@{/phones/create}">Create Phone</a></li>
+      <li class="nav-item"><a class="nav-link" th:href="@{/logout}">Logout</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="container mt-4">
+  <h1>Welcome, Admin!</h1>
+  <h2>Available Phones</h2>
+  <div class="row">
+    <div class="col-md-4" th:each="phone : ${phones}">
+      <div class="card mb-4">
+        <img th:src="@{${phone.imageUrl}}" class="card-img-top" alt="Phone Image">
+        <div class="card-body">
+          <h5 class="card-title" th:text="${phone.brand} + ' ' + ${phone.model}">Phone Model</h5>
+          <p class="card-text" th:text="'$' + ${phone.price}">Price: $0.00</p>
+          <p class="card-text" th:text="'Stock Level: ' + ${phone.stockLevel}"></p>
+        </div>
+      </div>
+    </div>
+    <div class="col-12" th:if="${#lists.isEmpty(phones)}">
+      <p>No phones available at the moment.</p>
+    </div>
+  </div>
+</div>
+<footer class="footer bg-dark text-white py-3">
+  <div class="container text-center">
+    <p class="mb-1">&copy; 2024 PhoneStore. All rights reserved.</p>
+    <p>
+      Contact us:
+      <a href="mailto:support@phonestore.com" class="text-white">support@phonestore.com</a>
+    </p>
+    <p>
+      Follow us:
+      <a href="#" class="text-white ml-2"><i class="fab fa-facebook-f"></i></a>
+      <a href="#" class="text-white ml-2"><i class="fab fa-twitter"></i></a>
+      <a href="#" class="text-white ml-2"><i class="fab fa-instagram"></i></a>
+    </p>
+  </div>
+</footer>
+<script src="/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

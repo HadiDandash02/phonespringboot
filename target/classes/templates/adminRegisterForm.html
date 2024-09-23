@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Admin Registration</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<h1>Admin Registration</h1>
+<form th:action="@{/registration/admin}" method="post" th:object="${userRegistration}">
+  <div>
+    <label for="username">Username:</label>
+    <input type="text" id="username" name="username" th:field="*{username}" required />
+    <div th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></div>
+  </div>
+  <div>
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password" th:field="*{password}" required />
+    <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+  </div>
+  <div>
+    <button type="submit">Register Admin</button>
+  </div>
+  <div>
+    <a href="/login">Already have an account? Login here.</a>
+  </div>
+</form>
+</body>
+</html>

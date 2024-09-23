@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Home - Phone Store</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <link rel="stylesheet" href="/css/styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    html, body {
+      height: 100%;
+    }
+    body {
+      display: flex;
+      flex-direction: column;
+    }
+    .content {
+      flex: 1 0 auto;
+      padding-top: 80px; /* Offset for fixed navbar */
+    }
+    .footer {
+      flex-shrink: 0;
+    }
+  </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+  <div class="container">
+    <a class="navbar-brand" th:href="@{/home}">PhoneStore</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" th:href="@{/users/user-dashboard}">Dashboard</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" th:href="@{/cart}">Cart</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" th:href="@{/logout}">Logout</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<div class="container">
+  <h2>Available Phones</h2>
+  <div class="row">
+    <div class="col-md-4" th:each="phone : ${phones}">
+      <div class="card">
+        <img th:src="@{${phone.imageUrl}}" class="card-img-top" alt="Phone Image">
+        <div class="card-body">
+          <h5 class="card-title" th:text="${phone.brand} + ' ' + ${phone.model}">Phone Model</h5>
+          <p class="card-text" th:text="'$' + ${phone.price}">Price: $0.00</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-12" th:if="${#lists.isEmpty(phones)}">
+      <p>No phones available at the moment.</p>
+    </div>
+  </div>
+</div>
+
+
+
+<footer class="footer bg-dark text-white py-3">
+  <div class="container text-center">
+    <p class="mb-1">&copy; 2024 PhoneStore. All rights reserved.</p>
+    <p>
+      Contact us:
+      <a href="mailto:support@phonestore.com" class="text-white">support@phonestore.com</a>
+    </p>
+    <p>
+      Follow us:
+      <a href="#" class="text-white ml-2"><i class="fab fa-facebook-f"></i></a>
+      <a href="#" class="text-white ml-2"><i class="fab fa-twitter"></i></a>
+      <a href="#" class="text-white ml-2"><i class="fab fa-instagram"></i></a>
+    </p>
+  </div>
+</footer>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Error - Phone Store</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-5">
+    <div class="alert alert-danger text-center" role="alert">
+        <h4 class="alert-heading">Oops! Something went wrong.</h4>
+        <p th:text="${errorMessage}">An unexpected error has occurred.</p>
+        <hr>
+        <a th:href="@{/}" class="btn btn-primary">Return to Home</a>
+    </div>
+</div>
+</body>
+</html>

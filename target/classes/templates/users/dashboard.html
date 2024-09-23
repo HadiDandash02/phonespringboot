@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Dashboard</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-4">
+  <h1>User Dashboard</h1>
+
+  <!-- Navigation Buttons -->
+  <div class="mb-3">
+    <a th:href="@{/home}" class="btn btn-primary">Back to Home</a>
+    <a th:href="@{/cart}" class="btn btn-success">View Cart</a>
+    <a th:href="@{/logout}" class="btn btn-danger">Logout</a>
+  </div>
+
+  <!-- Success Message -->
+  <div th:if="${success}" class="alert alert-success" role="alert">
+    <span th:text="${success}"></span>
+  </div>
+
+  <!-- Error Message -->
+  <div th:if="${error}" class="alert alert-danger" role="alert">
+    <span th:text="${error}"></span>
+  </div>
+
+  <!-- Phone List -->
+  <h2>Phone List</h2>
+  <table class="table table-bordered">
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>Brand</th>
+      <th>Model</th>
+      <th>Price (USD)</th>
+      <th>Stock Level</th>
+      <th>Image</th>
+      <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="phone : ${phones}">
+      <td th:text="${phone.id}"></td>
+      <td th:text="${phone.brand}"></td>
+      <td th:text="${phone.model}"></td>
+      <td th:text="${phone.price} + ' USD'"></td>
+      <td th:text="${phone.stockLevel}"></td>
+      <td>
+        <div th:if="${!#strings.isEmpty(phone.imageUrl)}">
+          <img th:src="@{${phone.imageUrl}}" alt="Phone Image" style="width: 100px;">
+        </div>
+        <div th:if="${#strings.isEmpty(phone.imageUrl)}">
+          <span>No Image</span>
+        </div>
+      </td>
+      <td>
+        <form th:action="@{/users/add/{id}(id=${phone.id})}" method="post">
+          <div class="form-group">
+            <label for="quantity-${phone.id}">Quantity</label>
+            <input type="number" name="quantity" class="form-control"
+                   id="quantity-${phone.id}" placeholder="Enter quantity" required
+                   min="1" max="${phone.stockLevel}">
+          </div>
+          <button type="submit" class="btn btn-primary btn-sm">Add to Cart</button>
+        </form>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+  <!-- Summary Information -->
+  <div class="mt-4">
+    <h2>Summary</h2>
+    <ul>
+      <li>Total Phones Available: <span th:text="${phones.size()}">0</span></li>
+      <li>Total Items in Cart: <span th:text="${cart.items.size()}">0</span></li>
+    </ul>
+  </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

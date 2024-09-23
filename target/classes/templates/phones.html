@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Available Phones - Phone Store</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .card {
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+        }
+        .card:hover {
+            transform: scale(1.05);
+        }
+        .card-img-top {
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+            height: 200px; /* Fixed height for uniformity */
+            object-fit: cover;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="#">Phone Store</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse"
+          data-target="#navbarNav" aria-controls="navbarNav"
+          aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+      <!-- Conditional Links Based on Roles -->
+      <li class="nav-item" th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
+        <a class="nav-link" th:href="@{/admin/dashboard}">Admin Dashboard</a>
+      </li>
+      <li class="nav-item" th:if="${#authorization.expression('hasRole(''USER'')')}">
+        <a class="nav-link" th:href="@{/users/user-dashboard}">Your Dashboard</a>
+      </li>
+      <li class="nav-item" th:if="${#authorization.expression('isAuthenticated()')}">
+        <a class="nav-link" th:href="@{/logout}">Logout</a>
+      </li>
+      <li class="nav-item" th:unless="${#authorization.expression('isAuthenticated()')}">
+        <a class="nav-link" th:href="@{/login}">Login</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<div class="container mt-4">
+  <h1 class="text-center mb-4">Available Phones</h1>
+  <div class="row">
+    <div class="col-md-4 mb-4" th:each="phone : ${phones}">
+      <div class="card">
+        <img th:src="${phone.imageUrl}" class="card-img-top" alt="Phone Image">
+        <div class="card-body">
+          <h5 class="card-title text-center"
+              th:text="${phone.brand} + ' ' + ${phone.model}">
+            Phone Name
+          </h5>
+          <p class="card-text text-center" th:text="${phone.price} + ' USD'">Price</p>
+          <div class="text-center">
+            <form th:action="@{/cart/add}" method="post">
+              <!-- No CSRF token needed as CSRF is disabled -->
+              <input type="hidden" name="phoneId" th:value="${phone.id}" />
+              <input type="hidden" name="quantity" value="1" />
+              <button type="submit" class="btn btn-primary">Add to Cart</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Existing Scripts -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

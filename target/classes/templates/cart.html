@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Cart</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-4">
+  <h1>Your Cart</h1>
+
+  <!-- Success Message -->
+  <div th:if="${success}" class="alert alert-success" role="alert">
+    <span th:text="${success}"></span>
+  </div>
+
+  <!-- Error Message -->
+  <div th:if="${error}" class="alert alert-danger" role="alert">
+    <span th:text="${error}"></span>
+  </div>
+
+  <table class="table table-bordered">
+
+    <tbody>
+    <tr th:each="item : ${cartItems}">
+      <td th:text="${item.phone.model}"></td>
+      <td th:text="${item.phone.price}"></td>
+      <td th:text="${item.quantity}"></td>
+      <td th:text="${item.phone.price * item.quantity}"></td>
+      <td>
+        <form th:action="@{/cart/remove}" method="post">
+          <input type="hidden" th:name="phoneId" th:value="${item.phone.id}"/>
+          <button type="submit" class="btn btn-danger btn-sm">Remove</button>
+        </form>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+  <h3>Total Price: <span th:text="${totalPrice} + ' USD'"></span></h3>
+
+  <div class="mt-4">
+    <form th:action="@{/cart/clear}" method="get" style="display:inline;">
+      <button type="submit" class="btn btn-warning">Clear Cart</button>
+    </form>
+  </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Delete Phone - Admin Dashboard</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="#">Phone Store</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse"
+          data-target="#navbarNav" aria-controls="navbarNav"
+          aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+      <!-- Admin-specific Links -->
+      <li class="nav-item">
+        <a class="nav-link" th:href="@{/admin/dashboard}">Admin Dashboard</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" th:href="@{/logout}">Logout</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<div class="container mt-4">
+  <h1>Delete Phone</h1>
+  <p>Are you sure you want to delete the phone <strong th:text="${phone.brand} + ' ' + ${phone.model}">Phone Name</strong>?</p>
+  <form th:action="@{/admin/delete-phone/{id}(id=${phone.id})}" method="post">
+    <!-- No CSRF token needed as CSRF is disabled -->
+    <button type="submit" class="btn btn-danger">Delete</button>
+    <a th:href="@{/admin/dashboard}" class="btn btn-secondary">Cancel</a>
+  </form>
+</div>
+
+<!-- Existing Scripts -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

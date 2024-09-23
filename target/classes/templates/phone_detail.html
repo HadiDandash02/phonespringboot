@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Phone Details</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
+  <h1 class="mt-4">Phone Details</h1>
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title" th:text="${phone.brand}">Phone Brand</h5>
+      <p class="card-text" th:text="'Model: ' + ${phone.model}">Phone Model</p>
+      <p class="card-text" th:text="'Price: $' + ${phone.price}">Phone Price</p>
+      <p class="card-text" th:text="'Stock Level: ' + ${phone.stockLevel}">Stock Level</p>
+      <td>
+        <div th:if="${phone.imageUrl != null and phone.imageUrl.length() > 0}">
+          <img th:src="@{${phone.imageUrl}}" alt="Phone Image" width="100" height="100"/>
+        </div>
+        <div th:if="${phone.imageUrl == null or phone.imageUrl.length() == 0}">
+          No image available
+        </div>
+      </td>
+
+    </div>
+  </div>
+  <a class="btn btn-warning mt-3" th:href="@{/phones/edit-phone/{id}(id=${phone.id})}">Edit</a>
+  <a class="btn btn-danger mt-3" th:href="@{/phones/delete/{id}(id=${phone.id})}"
+     onclick="return confirm('Are you sure?')">Delete</a>
+  <a class="btn btn-secondary mt-3" th:href="@{/phones}">Back to List</a>
+</div>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
